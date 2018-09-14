@@ -60,12 +60,14 @@
             }
 
         }
+        var latitude;
+        var longitude;
 
         function displayLocation(position) {
 
-            var latitude = position.coords.latitude;
+             latitude = position.coords.latitude;
 
-            var longitude = position.coords.longitude;
+            longitude = position.coords.longitude;
 
             mylocacord["lat"] = latitude;
             mylocacord["lng"] = longitude;
@@ -74,7 +76,7 @@
             var div = document.getElementById("location");
 
             div.innerHTML = "You are at Latitude: " + latitude + ", Longitude: " + longitude;
-
+            initMap();
 
         }
 
@@ -109,8 +111,6 @@
         }
 
         function initMap() {
-            //   var myloc = mylocacord;
-            console.log(mylocacord + " mylocacord");
             var map = new google.maps.Map(
                 document.getElementById('map'), { zoom: 4, center: mylocacord });
             var marker = new google.maps.Marker({ position: mylocacord, map: map });
