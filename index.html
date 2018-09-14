@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+        nav a {
+            padding: 3px 25px;
+            list-style: none;
+            background: thistle;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>My Google Maps Demo</h1>
+
+    <div style="text-align: center; margin: 10px 0;">
+            <nav>
+                <a href="example1.html">Class Example1</a> |
+                <a href="example2.html">Class Example2</a> |
+               
+            </nav>
+    <br>
+    <div id="location">
+    </div>
+    <br>
+    <div id="map"></div>
+
+    <div><p>This App uses the Google Map API with the help of api Key, which shows the loation of the current use. **Accessing is restricted by number of times we access the Map API </p></div>
+    <script>
+        var mylocacord = {
+            lat: 0,
+            lng: 0
+        }
+
+        console.log(mylocacord);
+
+        window.onload = getMyLocation
+
+
+
+        function getMyLocation() {
+
+            if (navigator.geolocation) {
+
+                // navigator.geolocation.getCurrentPosition(displayLocation);
+                navigator.geolocation.getCurrentPosition(displayLocation, displayError);
+
+
+            }
+
+            else {
+
+                alert("Sorry, there is no geolocation support");
+
+            }
+
+        }
+
+        function displayLocation(position) {
+
+            var latitude = position.coords.latitude;
+
+            var longitude = position.coords.longitude;
+
+            mylocacord["lat"] = latitude;
+            mylocacord["lng"] = longitude;
+
+            // console.log(mylocacord);
+            var div = document.getElementById("location");
+
+            div.innerHTML = "You are at Latitude: " + latitude + ", Longitude: " + longitude;
+
+
+        }
+
+        function displayError(error) {
+
+            switch (error.code) {
+
+                case error.TIMEOUT:
+
+                    alert('Geolocation request timed out');
+
+                    break;
+
+                case error.POSITION_UNAVAILABLE:
+
+                    alert('Geolocation Position unavailable');
+
+                    break;
+
+                case error.PERMISSION_DENIED:
+
+                    alert('Geolocation Permission denied');
+
+                    break;
+
+                default:
+
+                    alert('Geolocation returned an unknown error code: ' + error.code);
+
+            }
+
+        }
+
+        function initMap() {
+            //   var myloc = mylocacord;
+            console.log(mylocacord + " mylocacord");
+            var map = new google.maps.Map(
+                document.getElementById('map'), { zoom: 4, center: mylocacord });
+            var marker = new google.maps.Marker({ position: mylocacord, map: map });
+        }
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5EfYq_sPYHhbTgzz3LYjTRQI3T4ufxyg&callback=initMap">
+    </script>
+</body>
+
+</html>
